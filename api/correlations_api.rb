@@ -36,7 +36,7 @@ MyApp.add_route('GET', '/correlations', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -46,7 +46,7 @@ MyApp.add_route('GET', '/correlations', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -56,7 +56,7 @@ MyApp.add_route('GET', '/correlations', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     

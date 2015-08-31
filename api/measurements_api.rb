@@ -103,7 +103,7 @@ MyApp.add_route('GET', '/measurements', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -123,7 +123,7 @@ MyApp.add_route('GET', '/measurements', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -133,7 +133,7 @@ MyApp.add_route('GET', '/measurements', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -143,7 +143,7 @@ MyApp.add_route('GET', '/measurements', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -210,7 +210,7 @@ MyApp.add_route('GET', '/measurementsRange', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     

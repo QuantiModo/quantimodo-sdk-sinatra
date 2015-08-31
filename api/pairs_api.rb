@@ -116,7 +116,7 @@ MyApp.add_route('GET', '/pairs', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -126,7 +126,7 @@ MyApp.add_route('GET', '/pairs', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -136,7 +136,7 @@ MyApp.add_route('GET', '/pairs', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     

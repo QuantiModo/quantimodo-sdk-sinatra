@@ -87,7 +87,7 @@ MyApp.add_route('GET', '/public/variables/search/{search}', {
   "nickname" => "public_variables_search_search_get", 
   "responseClass" => "Variable", 
   "endpoint" => "/public/variables/search/{search}", 
-  "notes" => "Get top 5 PUBLIC variables with the most correlations containing the entered search characters. For example, search for 'mood' as an effect. Since 'Overall Mood' has a lot of correlations with other variables, it should be in the autocomplete list.",
+  "notes" => "Get top 5 PUBLIC variables with the most correlations containing the entered search characters. For example, search for 'mood' as an effect. Since 'Overall Mood' has a lot of correlations with other variables, it should be in the autocomplete list.<br>Supported filter parameters:<br><ul><li><b>category</b> - Category of Variable</li></ul><br>",
   "parameters" => [
     
     {
@@ -106,7 +106,7 @@ MyApp.add_route('GET', '/public/variables/search/{search}', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -116,7 +116,7 @@ MyApp.add_route('GET', '/public/variables/search/{search}', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -126,7 +126,7 @@ MyApp.add_route('GET', '/public/variables/search/{search}', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -139,6 +139,33 @@ MyApp.add_route('GET', '/public/variables/search/{search}', {
     },
     
     
+    
+    ]}) do
+  cross_origin
+  # the guts live here
+
+  {"message" => "yes, it worked"}.to_json
+end
+
+
+MyApp.add_route('POST', '/v1/userVariables', {
+  "resourcePath" => "/Variables",
+  "summary" => "Update User Settings for a Variable",
+  "nickname" => "v1_user_variables_post", 
+  "responseClass" => "void", 
+  "endpoint" => "/v1/userVariables", 
+  "notes" => "Users can change things like the display name for a variable. They can also change the parameters used in analysis of that variable such as the expected duration of action for a variable to have an effect, the estimated delay before the onset of action. In order to filter out erroneous data, they are able to set the maximum and minimum reasonable daily values for a variable.",
+  "parameters" => [
+    
+    
+    
+    
+    {
+      "name" => "body",
+      "description" => "Variable user settings data",
+      "dataType" => "UserVariables",
+      "paramType" => "body",
+    }
     
     ]}) do
   cross_origin
@@ -168,33 +195,6 @@ MyApp.add_route('GET', '/variableCategories', {
 end
 
 
-MyApp.add_route('POST', '/variableUserSettings', {
-  "resourcePath" => "/Variables",
-  "summary" => "Update User Settings for a Variable",
-  "nickname" => "variable_user_settings_post", 
-  "responseClass" => "void", 
-  "endpoint" => "/variableUserSettings", 
-  "notes" => "Users can change things like the display name for a variable. They can also change the parameters used in analysis of that variable such as the expected duration of action for a variable to have an effect, the estimated delay before the onset of action. In order to filter out erroneous data, they are able to set the maximum and minimum reasonable daily values for a variable.",
-  "parameters" => [
-    
-    
-    
-    
-    {
-      "name" => "body",
-      "description" => "Variable user settings data",
-      "dataType" => "VariableUserSettings",
-      "paramType" => "body",
-    }
-    
-    ]}) do
-  cross_origin
-  # the guts live here
-
-  {"message" => "yes, it worked"}.to_json
-end
-
-
 MyApp.add_route('GET', '/variables', {
   "resourcePath" => "/Variables",
   "summary" => "Get variables by the category name",
@@ -210,7 +210,7 @@ MyApp.add_route('GET', '/variables', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -230,7 +230,7 @@ MyApp.add_route('GET', '/variables', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -240,7 +240,7 @@ MyApp.add_route('GET', '/variables', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -250,7 +250,7 @@ MyApp.add_route('GET', '/variables', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -327,7 +327,7 @@ MyApp.add_route('GET', '/variables/search/{search}', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
@@ -337,7 +337,7 @@ MyApp.add_route('GET', '/variables/search/{search}', {
       "dataType" => "int",
       "paramType" => "query",
       
-      "allowableValues" => "{}",
+      "allowableValues" => "",
       
     },
     
