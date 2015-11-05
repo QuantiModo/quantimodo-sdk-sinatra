@@ -234,7 +234,7 @@ MyApp.add_route('GET', '/measurements/csv', {
   "nickname" => "measurements_csv_get", 
   "responseClass" => "file", 
   "endpoint" => "/measurements/csv", 
-  "notes" => "Get Measurements CSV",
+  "notes" => "Download a CSV containing all user measurements",
   "parameters" => [
     
     
@@ -254,7 +254,7 @@ MyApp.add_route('POST', '/measurements/request_csv', {
   "nickname" => "measurements_request_csv_post", 
   "responseClass" => "int", 
   "endpoint" => "/measurements/request_csv", 
-  "notes" => "Post Request for Measurements CSV",
+  "notes" => "Use this endpoint to schedule a CSV export containing all user measurements to be emailed to the user within 24 hours.",
   "parameters" => [
     
     
