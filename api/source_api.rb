@@ -1,18 +1,28 @@
 require 'json'
 
 
-MyApp.add_route('GET', '/sources', {
+MyApp.add_route('GET', '/api/v2/sources', {
   "resourcePath" => "/Source",
-  "summary" => "Get all Sources",
+  "summary" => "Get measurement sources",
   "nickname" => "sources_get", 
-  "responseClass" => "inline_response_200_13", 
+  "responseClass" => "inline_response_200_21", 
   "endpoint" => "/sources", 
-  "notes" => "Get all Sources",
+  "notes" => "Returns a list of all the apps from which measurement data is obtained.",
   "parameters" => [
     
     {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
       "name" => "client_id",
-      "description" => "client_id",
+      "description" => "The ID of the client application which last created or updated this source",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -22,7 +32,7 @@ MyApp.add_route('GET', '/sources', {
     
     {
       "name" => "name",
-      "description" => "name",
+      "description" => "Name of the application or device",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -32,7 +42,7 @@ MyApp.add_route('GET', '/sources', {
     
     {
       "name" => "created_at",
-      "description" => "created_at",
+      "description" => "When the record was first created. Use ISO 8601 datetime format",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -42,7 +52,7 @@ MyApp.add_route('GET', '/sources', {
     
     {
       "name" => "updated_at",
-      "description" => "updated_at",
+      "description" => "When the record was last updated. Use ISO 8601 datetime format",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -52,7 +62,7 @@ MyApp.add_route('GET', '/sources', {
     
     {
       "name" => "limit",
-      "description" => "limit",
+      "description" => "The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0. The maximum limit is 200 records.",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -62,7 +72,7 @@ MyApp.add_route('GET', '/sources', {
     
     {
       "name" => "offset",
-      "description" => "offset",
+      "description" => "OFFSET says to skip that many rows before beginning to return rows to the client. OFFSET 0 is the same as omitting the OFFSET clause. If both OFFSET and LIMIT appear, then OFFSET rows are skipped before starting to count the LIMIT rows that are returned.",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -72,7 +82,7 @@ MyApp.add_route('GET', '/sources', {
     
     {
       "name" => "sort",
-      "description" => "sort",
+      "description" => "Sort by given field. If the field is prefixed with &#39;-&#39;, it will sort in descending order.",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -91,14 +101,24 @@ MyApp.add_route('GET', '/sources', {
 end
 
 
-MyApp.add_route('POST', '/sources', {
+MyApp.add_route('POST', '/api/v2/sources', {
   "resourcePath" => "/Source",
-  "summary" => "Store Source",
+  "summary" => "Add a data source",
   "nickname" => "sources_post", 
-  "responseClass" => "inline_response_200_14", 
+  "responseClass" => "inline_response_200_22", 
   "endpoint" => "/sources", 
-  "notes" => "Store Source",
+  "notes" => "Add a life-tracking app or device to the QuantiModo list of data sources.",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     
@@ -118,14 +138,24 @@ MyApp.add_route('POST', '/sources', {
 end
 
 
-MyApp.add_route('GET', '/sources/{id}', {
+MyApp.add_route('GET', '/api/v2/sources/{id}', {
   "resourcePath" => "/Source",
   "summary" => "Get Source",
   "nickname" => "sources_id_get", 
-  "responseClass" => "inline_response_200_14", 
+  "responseClass" => "inline_response_200_22", 
   "endpoint" => "/sources/{id}", 
   "notes" => "Get Source",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {
@@ -145,7 +175,7 @@ MyApp.add_route('GET', '/sources/{id}', {
 end
 
 
-MyApp.add_route('PUT', '/sources/{id}', {
+MyApp.add_route('PUT', '/api/v2/sources/{id}', {
   "resourcePath" => "/Source",
   "summary" => "Update Source",
   "nickname" => "sources_id_put", 
@@ -153,6 +183,16 @@ MyApp.add_route('PUT', '/sources/{id}', {
   "endpoint" => "/sources/{id}", 
   "notes" => "Update Source",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {
@@ -179,7 +219,7 @@ MyApp.add_route('PUT', '/sources/{id}', {
 end
 
 
-MyApp.add_route('DELETE', '/sources/{id}', {
+MyApp.add_route('DELETE', '/api/v2/sources/{id}', {
   "resourcePath" => "/Source",
   "summary" => "Delete Source",
   "nickname" => "sources_id_delete", 
@@ -187,6 +227,16 @@ MyApp.add_route('DELETE', '/sources/{id}', {
   "endpoint" => "/sources/{id}", 
   "notes" => "Delete Source",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {

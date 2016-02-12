@@ -1,18 +1,28 @@
 require 'json'
 
 
-MyApp.add_route('GET', '/correlations', {
+MyApp.add_route('GET', '/api/v2/correlations', {
   "resourcePath" => "/Correlation",
   "summary" => "Get all Correlations",
   "nickname" => "correlations_get", 
-  "responseClass" => "inline_response_200_7", 
+  "responseClass" => "inline_response_200_17", 
   "endpoint" => "/correlations", 
   "notes" => "Get all Correlations",
   "parameters" => [
     
     {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
       "name" => "timestamp",
-      "description" => "timestamp",
+      "description" => "Time at which correlation was calculated",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -22,7 +32,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "user_id",
-      "description" => "user_id",
+      "description" => "ID of user that owns this correlation",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -32,7 +42,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "correlation",
-      "description" => "correlation",
+      "description" => "Pearson correlation coefficient between cause and effect measurements",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -42,7 +52,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "cause_id",
-      "description" => "cause_id",
+      "description" => "variable ID of the predictor variable for which the user desires correlations",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -52,7 +62,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "effect_id",
-      "description" => "effect_id",
+      "description" => "variable ID of the outcome variable for which the user desires correlations",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -62,7 +72,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "onset_delay",
-      "description" => "onset_delay",
+      "description" => "User estimated or default time after cause measurement before a perceivable effect is observed",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -72,7 +82,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "duration_of_action",
-      "description" => "duration_of_action",
+      "description" => "Time over which the cause is expected to produce a perceivable effect following the onset delay",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -82,7 +92,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "number_of_pairs",
-      "description" => "number_of_pairs",
+      "description" => "Number of points that went into the correlation calculation",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -92,7 +102,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "value_predicting_high_outcome",
-      "description" => "value_predicting_high_outcome",
+      "description" => "cause value that predicts an above average effect value (in default unit for predictor variable)",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -102,7 +112,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "value_predicting_low_outcome",
-      "description" => "value_predicting_low_outcome",
+      "description" => "cause value that predicts a below average effect value (in default unit for predictor variable)",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -112,7 +122,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "optimal_pearson_product",
-      "description" => "optimal_pearson_product",
+      "description" => "Optimal Pearson Product",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -122,7 +132,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "vote",
-      "description" => "vote",
+      "description" => "Vote",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -132,7 +142,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "statistical_significance",
-      "description" => "statistical_significance",
+      "description" => "A function of the effect size and sample size",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -142,7 +152,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "cause_unit",
-      "description" => "cause_unit",
+      "description" => "Unit of the predictor variable",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -152,7 +162,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "cause_unit_id",
-      "description" => "cause_unit_id",
+      "description" => "Unit ID of the predictor variable",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -162,7 +172,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "cause_changes",
-      "description" => "cause_changes",
+      "description" => "Cause changes",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -172,7 +182,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "effect_changes",
-      "description" => "effect_changes",
+      "description" => "Effect changes",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -182,7 +192,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "qm_score",
-      "description" => "qm_score",
+      "description" => "QM Score",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -202,7 +212,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "created_at",
-      "description" => "created_at",
+      "description" => "When the record was first created. Use ISO 8601 datetime format",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -212,7 +222,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "updated_at",
-      "description" => "updated_at",
+      "description" => "When the record in the database was last updated. Use ISO 8601 datetime format",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -222,7 +232,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "reverse_pearson_correlation_coefficient",
-      "description" => "reverse_pearson_correlation_coefficient",
+      "description" => "Correlation when cause and effect are reversed. For any causal relationship, the forward correlation should exceed the reverse correlation",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -232,7 +242,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "predictive_pearson_correlation_coefficient",
-      "description" => "predictive_pearson_correlation_coefficient",
+      "description" => "Predictive Pearson Correlation Coefficient",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -242,7 +252,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "limit",
-      "description" => "limit",
+      "description" => "Limit the number of results returned",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -252,7 +262,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "offset",
-      "description" => "offset",
+      "description" => "Records from give Offset",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -262,7 +272,7 @@ MyApp.add_route('GET', '/correlations', {
     
     {
       "name" => "sort",
-      "description" => "sort",
+      "description" => "Sort records by given field",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -281,14 +291,24 @@ MyApp.add_route('GET', '/correlations', {
 end
 
 
-MyApp.add_route('POST', '/correlations', {
+MyApp.add_route('POST', '/api/v2/correlations', {
   "resourcePath" => "/Correlation",
   "summary" => "Store Correlation",
   "nickname" => "correlations_post", 
-  "responseClass" => "inline_response_200_8", 
+  "responseClass" => "inline_response_200_18", 
   "endpoint" => "/correlations", 
   "notes" => "Store Correlation",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     
@@ -308,14 +328,24 @@ MyApp.add_route('POST', '/correlations', {
 end
 
 
-MyApp.add_route('GET', '/correlations/{id}', {
+MyApp.add_route('GET', '/api/v2/correlations/{id}', {
   "resourcePath" => "/Correlation",
-  "summary" => "Get Correlation",
+  "summary" => "Get Correlation Details",
   "nickname" => "correlations_id_get", 
-  "responseClass" => "inline_response_200_8", 
+  "responseClass" => "inline_response_200_18", 
   "endpoint" => "/correlations/{id}", 
   "notes" => "Get Correlation",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {
@@ -335,7 +365,7 @@ MyApp.add_route('GET', '/correlations/{id}', {
 end
 
 
-MyApp.add_route('PUT', '/correlations/{id}', {
+MyApp.add_route('PUT', '/api/v2/correlations/{id}', {
   "resourcePath" => "/Correlation",
   "summary" => "Update Correlation",
   "nickname" => "correlations_id_put", 
@@ -343,6 +373,16 @@ MyApp.add_route('PUT', '/correlations/{id}', {
   "endpoint" => "/correlations/{id}", 
   "notes" => "Update Correlation",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {
@@ -369,7 +409,7 @@ MyApp.add_route('PUT', '/correlations/{id}', {
 end
 
 
-MyApp.add_route('DELETE', '/correlations/{id}', {
+MyApp.add_route('DELETE', '/api/v2/correlations/{id}', {
   "resourcePath" => "/Correlation",
   "summary" => "Delete Correlation",
   "nickname" => "correlations_id_delete", 
@@ -377,6 +417,16 @@ MyApp.add_route('DELETE', '/correlations/{id}', {
   "endpoint" => "/correlations/{id}", 
   "notes" => "Delete Correlation",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {

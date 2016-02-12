@@ -1,13 +1,13 @@
 require 'json'
 
 
-MyApp.add_route('GET', '/api/v2/variableCategories', {
-  "resourcePath" => "/VariableCategory",
-  "summary" => "Get all VariableCategories",
-  "nickname" => "variable_categories_get", 
-  "responseClass" => "inline_response_200_31", 
-  "endpoint" => "/variableCategories", 
-  "notes" => "The variable categories include Activity, Causes of Illness, Cognitive Performance, Conditions, Environment, Foods, Location, Miscellaneous, Mood, Nutrition, Physical Activity, Physique, Sleep, Social Interactions, Symptoms, Treatments, Vital Signs, and Work.",
+MyApp.add_route('GET', '/api/v2/userVariableRelationships', {
+  "resourcePath" => "/UserVariableRelationship",
+  "summary" => "Get all UserVariableRelationships",
+  "nickname" => "user_variable_relationships_get", 
+  "responseClass" => "inline_response_200_8", 
+  "endpoint" => "/userVariableRelationships", 
+  "notes" => "Get all UserVariableRelationships",
   "parameters" => [
     
     {
@@ -21,8 +21,18 @@ MyApp.add_route('GET', '/api/v2/variableCategories', {
     },
     
     {
-      "name" => "name",
-      "description" => "Name of the category",
+      "name" => "id",
+      "description" => "id",
+      "dataType" => "int",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "confidence_level",
+      "description" => "Our confidence that a consistent predictive relationship exists based on the amount of evidence, reproducibility, and other factors",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -31,8 +41,8 @@ MyApp.add_route('GET', '/api/v2/variableCategories', {
     },
     
     {
-      "name" => "filling_value",
-      "description" => "Value for replacing null measurements",
+      "name" => "confidence_score",
+      "description" => "A quantitative representation of our confidence that a consistent predictive relationship exists based on the amount of evidence, reproducibility, and other factors",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -41,19 +51,9 @@ MyApp.add_route('GET', '/api/v2/variableCategories', {
     },
     
     {
-      "name" => "maximum_allowed_value",
-      "description" => "Maximum recorded value of this category",
-      "dataType" => "number",
-      "paramType" => "query",
-      
-      "allowableValues" => "",
-      
-    },
-    
-    {
-      "name" => "minimum_allowed_value",
-      "description" => "Minimum recorded value of this category",
-      "dataType" => "number",
+      "name" => "direction",
+      "description" => "Direction is positive if higher predictor values generally precede higher outcome values. Direction is negative if higher predictor values generally precede lower outcome values.",
+      "dataType" => "string",
       "paramType" => "query",
       
       "allowableValues" => "",
@@ -71,6 +71,16 @@ MyApp.add_route('GET', '/api/v2/variableCategories', {
     },
     
     {
+      "name" => "error_message",
+      "description" => "error_message",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
       "name" => "onset_delay",
       "description" => "Estimated number of seconds that pass before a stimulus produces a perceivable effect",
       "dataType" => "int",
@@ -81,18 +91,8 @@ MyApp.add_route('GET', '/api/v2/variableCategories', {
     },
     
     {
-      "name" => "combination_operation",
-      "description" => "How to combine values of this variable (for instance, to see a summary of the values over a month) SUM or MEAN",
-      "dataType" => "string",
-      "paramType" => "query",
-      
-      "allowableValues" => "",
-      
-    },
-    
-    {
-      "name" => "updated",
-      "description" => "updated",
+      "name" => "outcome_variable_id",
+      "description" => "Variable ID for the outcome variable",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -101,18 +101,8 @@ MyApp.add_route('GET', '/api/v2/variableCategories', {
     },
     
     {
-      "name" => "cause_only",
-      "description" => "A value of 1 indicates that this category is generally a cause in a causal relationship.  An example of a causeOnly category would be a category such as Work which would generally not be influenced by the behaviour of the user",
-      "dataType" => "boolean",
-      "paramType" => "query",
-      
-      "allowableValues" => "",
-      
-    },
-    
-    {
-      "name" => "public",
-      "description" => "Is category public",
+      "name" => "predictor_variable_id",
+      "description" => "Variable ID for the predictor variable",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -121,49 +111,79 @@ MyApp.add_route('GET', '/api/v2/variableCategories', {
     },
     
     {
-      "name" => "outcome",
-      "description" => "outcome",
-      "dataType" => "boolean",
-      "paramType" => "query",
-      
-      "allowableValues" => "",
-      
-    },
-    
-    {
-      "name" => "created_at",
-      "description" => "When the record was first created. Use ISO 8601 datetime format",
-      "dataType" => "string",
-      "paramType" => "query",
-      
-      "allowableValues" => "",
-      
-    },
-    
-    {
-      "name" => "updated_at",
-      "description" => "When the record was last updated. Use ISO 8601 datetime format",
-      "dataType" => "string",
-      "paramType" => "query",
-      
-      "allowableValues" => "",
-      
-    },
-    
-    {
-      "name" => "image_url",
-      "description" => "Image URL",
-      "dataType" => "string",
-      "paramType" => "query",
-      
-      "allowableValues" => "",
-      
-    },
-    
-    {
-      "name" => "default_unit_id",
-      "description" => "ID of the default unit for the category",
+      "name" => "predictor_unit_id",
+      "description" => "ID for default unit of the predictor variable",
       "dataType" => "int",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "sinn_rank",
+      "description" => "A value representative of the relevance of this predictor relative to other predictors of this outcome.  Usually used for relevancy sorting.",
+      "dataType" => "number",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "strength_level",
+      "description" => "Can be weak, medium, or strong based on the size of the effect which the predictor appears to have on the outcome relative to other variable relationship strength scores.",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "strength_score",
+      "description" => "A value represented to the size of the effect which the predictor appears to have on the outcome.",
+      "dataType" => "number",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "user_id",
+      "description" => "user_id",
+      "dataType" => "int",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "vote",
+      "description" => "vote",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "value_predicting_high_outcome",
+      "description" => "Value for the predictor variable (in it&#39;s default unit) which typically precedes an above average outcome value",
+      "dataType" => "number",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "value_predicting_low_outcome",
+      "description" => "Value for the predictor variable (in it&#39;s default unit) which typically precedes a below average outcome value",
+      "dataType" => "number",
       "paramType" => "query",
       
       "allowableValues" => "",
@@ -211,13 +231,13 @@ MyApp.add_route('GET', '/api/v2/variableCategories', {
 end
 
 
-MyApp.add_route('POST', '/api/v2/variableCategories', {
-  "resourcePath" => "/VariableCategory",
-  "summary" => "Store VariableCategory",
-  "nickname" => "variable_categories_post", 
-  "responseClass" => "inline_response_200_32", 
-  "endpoint" => "/variableCategories", 
-  "notes" => "Store VariableCategory",
+MyApp.add_route('POST', '/api/v2/userVariableRelationships', {
+  "resourcePath" => "/UserVariableRelationship",
+  "summary" => "Store UserVariableRelationship",
+  "nickname" => "user_variable_relationships_post", 
+  "responseClass" => "inline_response_200_29", 
+  "endpoint" => "/userVariableRelationships", 
+  "notes" => "Store UserVariableRelationship",
   "parameters" => [
     
     {
@@ -235,8 +255,8 @@ MyApp.add_route('POST', '/api/v2/variableCategories', {
     
     {
       "name" => "body",
-      "description" => "VariableCategory that should be stored",
-      "dataType" => "VariableCategory",
+      "description" => "UserVariableRelationship that should be stored",
+      "dataType" => "UserVariableRelationship",
       "paramType" => "body",
     }
     
@@ -248,13 +268,13 @@ MyApp.add_route('POST', '/api/v2/variableCategories', {
 end
 
 
-MyApp.add_route('GET', '/api/v2/variableCategories/{id}', {
-  "resourcePath" => "/VariableCategory",
-  "summary" => "Get VariableCategory",
-  "nickname" => "variable_categories_id_get", 
-  "responseClass" => "inline_response_200_32", 
-  "endpoint" => "/variableCategories/{id}", 
-  "notes" => "Get VariableCategory",
+MyApp.add_route('GET', '/api/v2/userVariableRelationships/{id}', {
+  "resourcePath" => "/UserVariableRelationship",
+  "summary" => "Get UserVariableRelationship",
+  "nickname" => "user_variable_relationships_id_get", 
+  "responseClass" => "inline_response_200_29", 
+  "endpoint" => "/userVariableRelationships/{id}", 
+  "notes" => "Get UserVariableRelationship",
   "parameters" => [
     
     {
@@ -270,7 +290,7 @@ MyApp.add_route('GET', '/api/v2/variableCategories/{id}', {
     
     {
       "name" => "id",
-      "description" => "id of VariableCategory",
+      "description" => "id of UserVariableRelationship",
       "dataType" => "int",
       "paramType" => "path",
     },
@@ -285,13 +305,13 @@ MyApp.add_route('GET', '/api/v2/variableCategories/{id}', {
 end
 
 
-MyApp.add_route('PUT', '/api/v2/variableCategories/{id}', {
-  "resourcePath" => "/VariableCategory",
-  "summary" => "Update VariableCategory",
-  "nickname" => "variable_categories_id_put", 
+MyApp.add_route('PUT', '/api/v2/userVariableRelationships/{id}', {
+  "resourcePath" => "/UserVariableRelationship",
+  "summary" => "Update UserVariableRelationship",
+  "nickname" => "user_variable_relationships_id_put", 
   "responseClass" => "inline_response_200_2", 
-  "endpoint" => "/variableCategories/{id}", 
-  "notes" => "Update VariableCategory",
+  "endpoint" => "/userVariableRelationships/{id}", 
+  "notes" => "Update UserVariableRelationship",
   "parameters" => [
     
     {
@@ -307,7 +327,7 @@ MyApp.add_route('PUT', '/api/v2/variableCategories/{id}', {
     
     {
       "name" => "id",
-      "description" => "id of VariableCategory",
+      "description" => "id of UserVariableRelationship",
       "dataType" => "int",
       "paramType" => "path",
     },
@@ -316,8 +336,8 @@ MyApp.add_route('PUT', '/api/v2/variableCategories/{id}', {
     
     {
       "name" => "body",
-      "description" => "VariableCategory that should be updated",
-      "dataType" => "VariableCategory",
+      "description" => "UserVariableRelationship that should be updated",
+      "dataType" => "UserVariableRelationship",
       "paramType" => "body",
     }
     
@@ -329,13 +349,13 @@ MyApp.add_route('PUT', '/api/v2/variableCategories/{id}', {
 end
 
 
-MyApp.add_route('DELETE', '/api/v2/variableCategories/{id}', {
-  "resourcePath" => "/VariableCategory",
-  "summary" => "Delete VariableCategory",
-  "nickname" => "variable_categories_id_delete", 
+MyApp.add_route('DELETE', '/api/v2/userVariableRelationships/{id}', {
+  "resourcePath" => "/UserVariableRelationship",
+  "summary" => "Delete UserVariableRelationship",
+  "nickname" => "user_variable_relationships_id_delete", 
   "responseClass" => "inline_response_200_2", 
-  "endpoint" => "/variableCategories/{id}", 
-  "notes" => "Delete VariableCategory",
+  "endpoint" => "/userVariableRelationships/{id}", 
+  "notes" => "Delete UserVariableRelationship",
   "parameters" => [
     
     {
@@ -351,7 +371,7 @@ MyApp.add_route('DELETE', '/api/v2/variableCategories/{id}', {
     
     {
       "name" => "id",
-      "description" => "id of VariableCategory",
+      "description" => "id of UserVariableRelationship",
       "dataType" => "int",
       "paramType" => "path",
     },

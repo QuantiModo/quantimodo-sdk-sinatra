@@ -1,18 +1,18 @@
 require 'json'
 
 
-MyApp.add_route('GET', '/userVariables', {
+MyApp.add_route('GET', '/api/v2/userVariables', {
   "resourcePath" => "/UserVariable",
   "summary" => "Get all UserVariables",
   "nickname" => "user_variables_get", 
-  "responseClass" => "inline_response_200_21", 
+  "responseClass" => "inline_response_200_9", 
   "endpoint" => "/userVariables", 
   "notes" => "Get all UserVariables",
   "parameters" => [
     
     {
-      "name" => "client_id",
-      "description" => "client_id",
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -21,8 +21,38 @@ MyApp.add_route('GET', '/userVariables', {
     },
     
     {
+      "name" => "client_id",
+      "description" => "The ID of the client application which last created or updated this user variable",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "parent_id",
+      "description" => "ID of the parent variable if this variable has any parent",
+      "dataType" => "int",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
       "name" => "variable_id",
-      "description" => "variable_id",
+      "description" => "ID of variable",
+      "dataType" => "int",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "user_id",
+      "description" => "User ID",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -32,7 +62,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "default_unit_id",
-      "description" => "default_unit_id",
+      "description" => "D of unit to use for this variable",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -42,7 +72,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "minimum_allowed_value",
-      "description" => "minimum_allowed_value",
+      "description" => "Minimum reasonable value for this variable (uses default unit)",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -52,7 +82,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "maximum_allowed_value",
-      "description" => "maximum_allowed_value",
+      "description" => "Maximum reasonable value for this variable (uses default unit)",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -62,7 +92,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "filling_value",
-      "description" => "filling_value",
+      "description" => "Value for replacing null measurements",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -72,7 +102,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "join_with",
-      "description" => "join_with",
+      "description" => "The Variable this Variable should be joined with. If the variable is joined with some other variable then it is not shown to user in the list of variables",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -82,7 +112,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "onset_delay",
-      "description" => "onset_delay",
+      "description" => "Estimated number of seconds that pass before a stimulus produces a perceivable effect",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -92,7 +122,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "duration_of_action",
-      "description" => "duration_of_action",
+      "description" => "Estimated duration of time following the onset delay in which a stimulus produces a perceivable effect",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -102,7 +132,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "variable_category_id",
-      "description" => "variable_category_id",
+      "description" => "ID of variable category",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -122,7 +152,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "public",
-      "description" => "public",
+      "description" => "Is variable public",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -132,7 +162,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "cause_only",
-      "description" => "cause_only",
+      "description" => "A value of 1 indicates that this variable is generally a cause in a causal relationship.  An example of a causeOnly variable would be a variable such as Cloud Cover which would generally not be influenced by the behaviour of the user",
       "dataType" => "boolean",
       "paramType" => "query",
       
@@ -142,7 +172,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "filling_type",
-      "description" => "filling_type",
+      "description" => "0 -&gt; No filling, 1 -&gt; Use filling-value",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -152,7 +182,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "number_of_measurements",
-      "description" => "number_of_measurements",
+      "description" => "Number of measurements",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -162,7 +192,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "number_of_processed_measurements",
-      "description" => "number_of_processed_measurements",
+      "description" => "Number of processed measurements",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -172,7 +202,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "measurements_at_last_analysis",
-      "description" => "measurements_at_last_analysis",
+      "description" => "Number of measurements at last analysis",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -182,7 +212,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "last_unit_id",
-      "description" => "last_unit_id",
+      "description" => "ID of last Unit",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -192,7 +222,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "last_original_unit_id",
-      "description" => "last_original_unit_id",
+      "description" => "ID of last original Unit",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -202,7 +232,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "last_original_value",
-      "description" => "last_original_value",
+      "description" => "Last original value which is stored",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -212,7 +242,17 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "last_value",
-      "description" => "last_value",
+      "description" => "Last Value",
+      "dataType" => "number",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "last_original_value2",
+      "description" => "Last original value which is stored",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -222,7 +262,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "last_source_id",
-      "description" => "last_source_id",
+      "description" => "ID of last source",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -232,7 +272,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "number_of_correlations",
-      "description" => "number_of_correlations",
+      "description" => "Number of correlations for this variable",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -262,7 +302,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "last_successful_update_time",
-      "description" => "last_successful_update_time",
+      "description" => "When this variable or its settings were last updated",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -272,7 +312,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "standard_deviation",
-      "description" => "standard_deviation",
+      "description" => "Standard deviation",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -282,7 +322,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "variance",
-      "description" => "variance",
+      "description" => "Variance",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -291,8 +331,8 @@ MyApp.add_route('GET', '/userVariables', {
     },
     
     {
-      "name" => "minimum_recorded_daily_value",
-      "description" => "minimum_recorded_daily_value",
+      "name" => "minimum_recorded_value",
+      "description" => "Minimum recorded value of this variable",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -301,8 +341,8 @@ MyApp.add_route('GET', '/userVariables', {
     },
     
     {
-      "name" => "maximum_recorded_daily_value",
-      "description" => "maximum_recorded_daily_value",
+      "name" => "maximum_recorded_value",
+      "description" => "Maximum recorded value of this variable",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -312,7 +352,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "mean",
-      "description" => "mean",
+      "description" => "Mean",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -322,7 +362,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "median",
-      "description" => "median",
+      "description" => "Median",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -332,7 +372,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "most_common_unit_id",
-      "description" => "most_common_unit_id",
+      "description" => "Most common Unit ID",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -342,7 +382,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "most_common_value",
-      "description" => "most_common_value",
+      "description" => "Most common value",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -352,7 +392,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "number_of_unique_daily_values",
-      "description" => "number_of_unique_daily_values",
+      "description" => "Number of unique daily values",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -362,7 +402,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "number_of_changes",
-      "description" => "number_of_changes",
+      "description" => "Number of changes",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -372,7 +412,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "skewness",
-      "description" => "skewness",
+      "description" => "Skewness",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -382,7 +422,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "kurtosis",
-      "description" => "kurtosis",
+      "description" => "Kurtosis",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -392,7 +432,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "latitude",
-      "description" => "latitude",
+      "description" => "Latitude",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -402,7 +442,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "longitude",
-      "description" => "longitude",
+      "description" => "Longitude",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -412,7 +452,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "location",
-      "description" => "location",
+      "description" => "Location",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -422,7 +462,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "created_at",
-      "description" => "created_at",
+      "description" => "When the record was first created. Use ISO 8601 datetime format",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -432,7 +472,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "updated_at",
-      "description" => "updated_at",
+      "description" => "When the record was last updated. Use ISO 8601 datetime format",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -442,7 +482,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "outcome",
-      "description" => "outcome",
+      "description" => "Outcome variables (those with `outcome` == 1) are variables for which a human would generally want to identify the influencing factors.  These include symptoms of illness, physique, mood, cognitive performance, etc.  Generally correlation calculations are only performed on outcome variables",
       "dataType" => "boolean",
       "paramType" => "query",
       
@@ -452,7 +492,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "sources",
-      "description" => "sources",
+      "description" => "Comma-separated list of source names to limit variables to those sources",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -462,7 +502,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "earliest_source_time",
-      "description" => "earliest_source_time",
+      "description" => "Earliest source time",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -472,7 +512,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "latest_source_time",
-      "description" => "latest_source_time",
+      "description" => "Latest source time",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -482,7 +522,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "earliest_measurement_time",
-      "description" => "earliest_measurement_time",
+      "description" => "Earliest measurement time",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -492,7 +532,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "latest_measurement_time",
-      "description" => "latest_measurement_time",
+      "description" => "Latest measurement time",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -502,7 +542,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "earliest_filling_time",
-      "description" => "earliest_filling_time",
+      "description" => "Earliest filling time",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -512,7 +552,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "latest_filling_time",
-      "description" => "latest_filling_time",
+      "description" => "Latest filling time",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -522,7 +562,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "limit",
-      "description" => "limit",
+      "description" => "The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0. The maximum limit is 200 records.",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -532,7 +572,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "offset",
-      "description" => "offset",
+      "description" => "OFFSET says to skip that many rows before beginning to return rows to the client. OFFSET 0 is the same as omitting the OFFSET clause. If both OFFSET and LIMIT appear, then OFFSET rows are skipped before starting to count the LIMIT rows that are returned.",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -542,7 +582,7 @@ MyApp.add_route('GET', '/userVariables', {
     
     {
       "name" => "sort",
-      "description" => "sort",
+      "description" => "Sort by given field. If the field is prefixed with &#39;-&#39;, it will sort in descending order.",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -561,14 +601,24 @@ MyApp.add_route('GET', '/userVariables', {
 end
 
 
-MyApp.add_route('POST', '/userVariables', {
+MyApp.add_route('POST', '/api/v2/userVariables', {
   "resourcePath" => "/UserVariable",
   "summary" => "Store UserVariable",
   "nickname" => "user_variables_post", 
-  "responseClass" => "inline_response_200_22", 
+  "responseClass" => "inline_response_200_30", 
   "endpoint" => "/userVariables", 
-  "notes" => "Store UserVariable",
+  "notes" => "Users can change things like the display name for a variable. They can also change the parameters used in analysis of that variable such as the expected duration of action for a variable to have an effect, the estimated delay before the onset of action. In order to filter out erroneous data, they are able to set the maximum and minimum reasonable daily values for a variable.",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     
@@ -588,14 +638,24 @@ MyApp.add_route('POST', '/userVariables', {
 end
 
 
-MyApp.add_route('GET', '/userVariables/{id}', {
+MyApp.add_route('GET', '/api/v2/userVariables/{id}', {
   "resourcePath" => "/UserVariable",
   "summary" => "Get UserVariable",
   "nickname" => "user_variables_id_get", 
-  "responseClass" => "inline_response_200_22", 
+  "responseClass" => "inline_response_200_30", 
   "endpoint" => "/userVariables/{id}", 
   "notes" => "Get UserVariable",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {
@@ -615,7 +675,7 @@ MyApp.add_route('GET', '/userVariables/{id}', {
 end
 
 
-MyApp.add_route('PUT', '/userVariables/{id}', {
+MyApp.add_route('PUT', '/api/v2/userVariables/{id}', {
   "resourcePath" => "/UserVariable",
   "summary" => "Update UserVariable",
   "nickname" => "user_variables_id_put", 
@@ -623,6 +683,16 @@ MyApp.add_route('PUT', '/userVariables/{id}', {
   "endpoint" => "/userVariables/{id}", 
   "notes" => "Update UserVariable",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {
@@ -649,7 +719,7 @@ MyApp.add_route('PUT', '/userVariables/{id}', {
 end
 
 
-MyApp.add_route('DELETE', '/userVariables/{id}', {
+MyApp.add_route('DELETE', '/api/v2/userVariables/{id}', {
   "resourcePath" => "/UserVariable",
   "summary" => "Delete UserVariable",
   "nickname" => "user_variables_id_delete", 
@@ -657,6 +727,16 @@ MyApp.add_route('DELETE', '/userVariables/{id}', {
   "endpoint" => "/userVariables/{id}", 
   "notes" => "Delete UserVariable",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {

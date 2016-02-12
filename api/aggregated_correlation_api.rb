@@ -1,7 +1,7 @@
 require 'json'
 
 
-MyApp.add_route('GET', '/aggregatedCorrelations', {
+MyApp.add_route('GET', '/api/v2/aggregatedCorrelations', {
   "resourcePath" => "/AggregatedCorrelation",
   "summary" => "Get all AggregatedCorrelations",
   "nickname" => "aggregated_correlations_get", 
@@ -11,8 +11,18 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
   "parameters" => [
     
     {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
       "name" => "correlation",
-      "description" => "correlation",
+      "description" => "Pearson correlation coefficient between cause and effect measurements",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -22,7 +32,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "cause_id",
-      "description" => "cause_id",
+      "description" => "Variable ID of the predictor variable for which the user desires correlations",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -32,7 +42,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "effect_id",
-      "description" => "effect_id",
+      "description" => "Variable ID of the outcome variable for which the user desires correlations",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -42,7 +52,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "onset_delay",
-      "description" => "onset_delay",
+      "description" => "User estimated (or default number of seconds) after cause measurement before a perceivable effect is observed",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -52,7 +62,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "duration_of_action",
-      "description" => "duration_of_action",
+      "description" => "Number of seconds over which the predictor variable event is expected to produce a perceivable effect following the onset delay",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -62,7 +72,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "number_of_pairs",
-      "description" => "number_of_pairs",
+      "description" => "Number of predictor/outcome data points used in the analysis",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -72,7 +82,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "value_predicting_high_outcome",
-      "description" => "value_predicting_high_outcome",
+      "description" => "Predictor daily aggregated measurement value that predicts an above average effect measurement value (in default unit for predictor variable)",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -82,7 +92,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "value_predicting_low_outcome",
-      "description" => "value_predicting_low_outcome",
+      "description" => "Predictor daily aggregated measurement value that predicts a below average effect measurement value (in default unit for outcome variable)",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -92,17 +102,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "optimal_pearson_product",
-      "description" => "optimal_pearson_product",
-      "dataType" => "number",
-      "paramType" => "query",
-      
-      "allowableValues" => "",
-      
-    },
-    
-    {
-      "name" => "vote",
-      "description" => "vote",
+      "description" => "Optimal Pearson Product",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -112,7 +112,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "number_of_users",
-      "description" => "number_of_users",
+      "description" => "Number of users whose data was used in this aggregation",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -122,7 +122,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "number_of_correlations",
-      "description" => "number_of_correlations",
+      "description" => "Number of correlational analyses used in this aggregation",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -132,7 +132,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "statistical_significance",
-      "description" => "statistical_significance",
+      "description" => "A function of the effect size and sample size",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -142,7 +142,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "cause_unit",
-      "description" => "cause_unit",
+      "description" => "Abbreviated unit name for the predictor variable",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -152,7 +152,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "cause_unit_id",
-      "description" => "cause_unit_id",
+      "description" => "Unit ID for the predictor variable",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -162,7 +162,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "cause_changes",
-      "description" => "cause_changes",
+      "description" => "Number of times that the predictor time series changes",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -172,7 +172,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "effect_changes",
-      "description" => "effect_changes",
+      "description" => "Number of times that the predictor time series changes",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -182,7 +182,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "aggregate_qm_score",
-      "description" => "aggregate_qm_score",
+      "description" => "Aggregated QM Score which is directly proportional with the relevance of each predictor or outcome",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -192,7 +192,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "created_at",
-      "description" => "created_at",
+      "description" => "Date at which the analysis was first performed",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -202,7 +202,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "updated_at",
-      "description" => "updated_at",
+      "description" => "Date at which the analysis was last updated",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -212,7 +212,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "status",
-      "description" => "status",
+      "description" => "Indicates whether an analysis is up to date (UPDATED), needs to be updated (WAITING), or had an error (ERROR)",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -222,7 +222,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "error_message",
-      "description" => "error_message",
+      "description" => "Message describing any problems encountered during the analysis",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -232,7 +232,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "last_successful_update_time",
-      "description" => "last_successful_update_time",
+      "description" => "Last Successful update time",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -242,7 +242,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "reverse_pearson_correlation_coefficient",
-      "description" => "reverse_pearson_correlation_coefficient",
+      "description" => "Correlation when cause and effect are reversed. For any causal relationship, the forward correlation should exceed the reverse correlation",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -252,7 +252,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "predictive_pearson_correlation_coefficient",
-      "description" => "predictive_pearson_correlation_coefficient",
+      "description" => "Predictive Pearson Correlation Coefficient",
       "dataType" => "number",
       "paramType" => "query",
       
@@ -262,7 +262,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "limit",
-      "description" => "limit",
+      "description" => "Limit the number of results returned",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -272,7 +272,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "offset",
-      "description" => "offset",
+      "description" => "Records from give Offset",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -282,7 +282,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
     
     {
       "name" => "sort",
-      "description" => "sort",
+      "description" => "Sort records by given field",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -301,7 +301,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations', {
 end
 
 
-MyApp.add_route('POST', '/aggregatedCorrelations', {
+MyApp.add_route('POST', '/api/v2/aggregatedCorrelations', {
   "resourcePath" => "/AggregatedCorrelation",
   "summary" => "Store AggregatedCorrelation",
   "nickname" => "aggregated_correlations_post", 
@@ -309,6 +309,16 @@ MyApp.add_route('POST', '/aggregatedCorrelations', {
   "endpoint" => "/aggregatedCorrelations", 
   "notes" => "Store AggregatedCorrelation",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     
@@ -328,7 +338,7 @@ MyApp.add_route('POST', '/aggregatedCorrelations', {
 end
 
 
-MyApp.add_route('GET', '/aggregatedCorrelations/{id}', {
+MyApp.add_route('GET', '/api/v2/aggregatedCorrelations/{id}', {
   "resourcePath" => "/AggregatedCorrelation",
   "summary" => "Get AggregatedCorrelation",
   "nickname" => "aggregated_correlations_id_get", 
@@ -336,6 +346,16 @@ MyApp.add_route('GET', '/aggregatedCorrelations/{id}', {
   "endpoint" => "/aggregatedCorrelations/{id}", 
   "notes" => "Get AggregatedCorrelation",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {
@@ -355,7 +375,7 @@ MyApp.add_route('GET', '/aggregatedCorrelations/{id}', {
 end
 
 
-MyApp.add_route('PUT', '/aggregatedCorrelations/{id}', {
+MyApp.add_route('PUT', '/api/v2/aggregatedCorrelations/{id}', {
   "resourcePath" => "/AggregatedCorrelation",
   "summary" => "Update AggregatedCorrelation",
   "nickname" => "aggregated_correlations_id_put", 
@@ -363,6 +383,16 @@ MyApp.add_route('PUT', '/aggregatedCorrelations/{id}', {
   "endpoint" => "/aggregatedCorrelations/{id}", 
   "notes" => "Update AggregatedCorrelation",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {
@@ -389,7 +419,7 @@ MyApp.add_route('PUT', '/aggregatedCorrelations/{id}', {
 end
 
 
-MyApp.add_route('DELETE', '/aggregatedCorrelations/{id}', {
+MyApp.add_route('DELETE', '/api/v2/aggregatedCorrelations/{id}', {
   "resourcePath" => "/AggregatedCorrelation",
   "summary" => "Delete AggregatedCorrelation",
   "nickname" => "aggregated_correlations_id_delete", 
@@ -397,6 +427,16 @@ MyApp.add_route('DELETE', '/aggregatedCorrelations/{id}', {
   "endpoint" => "/aggregatedCorrelations/{id}", 
   "notes" => "Delete AggregatedCorrelation",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {

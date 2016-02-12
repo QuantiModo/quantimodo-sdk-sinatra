@@ -1,13 +1,13 @@
 require 'json'
 
 
-MyApp.add_route('GET', '/api/v2/variableUserSources', {
-  "resourcePath" => "/VariableUserSource",
-  "summary" => "Get all VariableUserSources",
-  "nickname" => "variable_user_sources_get", 
-  "responseClass" => "inline_response_200_10", 
-  "endpoint" => "/variableUserSources", 
-  "notes" => "Get all VariableUserSources",
+MyApp.add_route('GET', '/api/v2/trackingReminders', {
+  "resourcePath" => "/TrackingReminder",
+  "summary" => "Get tracking reminders",
+  "nickname" => "tracking_reminders_get", 
+  "responseClass" => "inline_response_200_6", 
+  "endpoint" => "/trackingReminders", 
+  "notes" => "Users can be reminded to track certain variables at a specified frequency with a default value.",
   "parameters" => [
     
     {
@@ -21,9 +21,9 @@ MyApp.add_route('GET', '/api/v2/variableUserSources', {
     },
     
     {
-      "name" => "variable_id",
-      "description" => "ID of variable",
-      "dataType" => "int",
+      "name" => "client_id",
+      "description" => "The ID of the client application which last created or updated this tracking reminder",
+      "dataType" => "string",
       "paramType" => "query",
       
       "allowableValues" => "",
@@ -32,7 +32,7 @@ MyApp.add_route('GET', '/api/v2/variableUserSources', {
     
     {
       "name" => "user_id",
-      "description" => "ID of User",
+      "description" => "ID of the user who created a reminder",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -41,8 +41,8 @@ MyApp.add_route('GET', '/api/v2/variableUserSources', {
     },
     
     {
-      "name" => "timestamp",
-      "description" => "Time that this measurement occurred Uses epoch minute (epoch time divided by 60)",
+      "name" => "variable_id",
+      "description" => "Id for the variable to be tracked",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -51,9 +51,9 @@ MyApp.add_route('GET', '/api/v2/variableUserSources', {
     },
     
     {
-      "name" => "earliest_measurement_time",
-      "description" => "Earliest measurement time",
-      "dataType" => "int",
+      "name" => "pop_up",
+      "description" => "True if the reminders should appear as a popup notification",
+      "dataType" => "boolean",
       "paramType" => "query",
       
       "allowableValues" => "",
@@ -61,9 +61,49 @@ MyApp.add_route('GET', '/api/v2/variableUserSources', {
     },
     
     {
-      "name" => "latest_measurement_time",
-      "description" => "Latest measurement time",
-      "dataType" => "int",
+      "name" => "sms",
+      "description" => "True if the reminders should be delivered via SMS",
+      "dataType" => "boolean",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "email",
+      "description" => "True if the reminders should be delivered via email",
+      "dataType" => "boolean",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "notification_bar",
+      "description" => "True if the reminders should appear in the notification bar",
+      "dataType" => "boolean",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "last_reminded",
+      "description" => "ISO 8601 timestamp for the last time a reminder was sent",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
+      "name" => "last_tracked",
+      "description" => "ISO 8601 timestamp for the last time a measurement was received for this user and variable",
+      "dataType" => "string",
       "paramType" => "query",
       
       "allowableValues" => "",
@@ -131,13 +171,13 @@ MyApp.add_route('GET', '/api/v2/variableUserSources', {
 end
 
 
-MyApp.add_route('POST', '/api/v2/variableUserSources', {
-  "resourcePath" => "/VariableUserSource",
-  "summary" => "Store VariableUserSource",
-  "nickname" => "variable_user_sources_post", 
-  "responseClass" => "inline_response_200_33", 
-  "endpoint" => "/variableUserSources", 
-  "notes" => "Store VariableUserSource",
+MyApp.add_route('POST', '/api/v2/trackingReminders', {
+  "resourcePath" => "/TrackingReminder",
+  "summary" => "Store TrackingReminder",
+  "nickname" => "tracking_reminders_post", 
+  "responseClass" => "inline_response_200_23", 
+  "endpoint" => "/trackingReminders", 
+  "notes" => "This is to enable users to indicate their opinion on the plausibility of a causal relationship between a treatment and outcome. QuantiModo incorporates crowd-sourced plausibility estimations into their algorithm. This is done allowing user to indicate their view of the plausibility of each relationship with thumbs up/down buttons placed next to each prediction.",
   "parameters" => [
     
     {
@@ -155,8 +195,8 @@ MyApp.add_route('POST', '/api/v2/variableUserSources', {
     
     {
       "name" => "body",
-      "description" => "VariableUserSource that should be stored",
-      "dataType" => "VariableUserSource",
+      "description" => "TrackingReminder that should be stored",
+      "dataType" => "TrackingReminder",
       "paramType" => "body",
     }
     
@@ -168,13 +208,13 @@ MyApp.add_route('POST', '/api/v2/variableUserSources', {
 end
 
 
-MyApp.add_route('GET', '/api/v2/variableUserSources/{id}', {
-  "resourcePath" => "/VariableUserSource",
-  "summary" => "Get VariableUserSource",
-  "nickname" => "variable_user_sources_id_get", 
-  "responseClass" => "inline_response_200_33", 
-  "endpoint" => "/variableUserSources/{id}", 
-  "notes" => "Get VariableUserSource",
+MyApp.add_route('GET', '/api/v2/trackingReminders/{id}', {
+  "resourcePath" => "/TrackingReminder",
+  "summary" => "Get TrackingReminder",
+  "nickname" => "tracking_reminders_id_get", 
+  "responseClass" => "inline_response_200_23", 
+  "endpoint" => "/trackingReminders/{id}", 
+  "notes" => "Get TrackingReminder",
   "parameters" => [
     
     {
@@ -187,20 +227,10 @@ MyApp.add_route('GET', '/api/v2/variableUserSources/{id}', {
       
     },
     
-    {
-      "name" => "source_id",
-      "description" => "source id of VariableUserSource",
-      "dataType" => "int",
-      "paramType" => "query",
-      
-      "allowableValues" => "",
-      
-    },
-    
     
     {
       "name" => "id",
-      "description" => "id of VariableUserSource",
+      "description" => "id of TrackingReminder",
       "dataType" => "int",
       "paramType" => "path",
     },
@@ -215,13 +245,13 @@ MyApp.add_route('GET', '/api/v2/variableUserSources/{id}', {
 end
 
 
-MyApp.add_route('PUT', '/api/v2/variableUserSources/{id}', {
-  "resourcePath" => "/VariableUserSource",
-  "summary" => "Update VariableUserSource",
-  "nickname" => "variable_user_sources_id_put", 
+MyApp.add_route('PUT', '/api/v2/trackingReminders/{id}', {
+  "resourcePath" => "/TrackingReminder",
+  "summary" => "Update TrackingReminder",
+  "nickname" => "tracking_reminders_id_put", 
   "responseClass" => "inline_response_200_2", 
-  "endpoint" => "/variableUserSources/{id}", 
-  "notes" => "Update VariableUserSource",
+  "endpoint" => "/trackingReminders/{id}", 
+  "notes" => "Update TrackingReminder",
   "parameters" => [
     
     {
@@ -234,20 +264,10 @@ MyApp.add_route('PUT', '/api/v2/variableUserSources/{id}', {
       
     },
     
-    {
-      "name" => "source_id",
-      "description" => "source id of VariableUserSource",
-      "dataType" => "int",
-      "paramType" => "query",
-      
-      "allowableValues" => "",
-      
-    },
-    
     
     {
       "name" => "id",
-      "description" => "variable_id of VariableUserSource",
+      "description" => "id of TrackingReminder",
       "dataType" => "int",
       "paramType" => "path",
     },
@@ -256,8 +276,8 @@ MyApp.add_route('PUT', '/api/v2/variableUserSources/{id}', {
     
     {
       "name" => "body",
-      "description" => "VariableUserSource that should be updated",
-      "dataType" => "VariableUserSource",
+      "description" => "TrackingReminder that should be updated",
+      "dataType" => "TrackingReminder",
       "paramType" => "body",
     }
     
@@ -269,13 +289,13 @@ MyApp.add_route('PUT', '/api/v2/variableUserSources/{id}', {
 end
 
 
-MyApp.add_route('DELETE', '/api/v2/variableUserSources/{id}', {
-  "resourcePath" => "/VariableUserSource",
-  "summary" => "Delete VariableUserSource",
-  "nickname" => "variable_user_sources_id_delete", 
+MyApp.add_route('DELETE', '/api/v2/trackingReminders/{id}', {
+  "resourcePath" => "/TrackingReminder",
+  "summary" => "Delete TrackingReminder",
+  "nickname" => "tracking_reminders_id_delete", 
   "responseClass" => "inline_response_200_2", 
-  "endpoint" => "/variableUserSources/{id}", 
-  "notes" => "Delete VariableUserSource",
+  "endpoint" => "/trackingReminders/{id}", 
+  "notes" => "Delete previously posted trackingReminder",
   "parameters" => [
     
     {
@@ -288,20 +308,10 @@ MyApp.add_route('DELETE', '/api/v2/variableUserSources/{id}', {
       
     },
     
-    {
-      "name" => "source_id",
-      "description" => "source id of VariableUserSource",
-      "dataType" => "int",
-      "paramType" => "query",
-      
-      "allowableValues" => "",
-      
-    },
-    
     
     {
       "name" => "id",
-      "description" => "variable_id of VariableUserSource",
+      "description" => "id of TrackingReminder",
       "dataType" => "int",
       "paramType" => "path",
     },

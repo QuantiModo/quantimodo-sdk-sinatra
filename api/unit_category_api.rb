@@ -1,18 +1,28 @@
 require 'json'
 
 
-MyApp.add_route('GET', '/unitCategories', {
+MyApp.add_route('GET', '/api/v2/unitCategories', {
   "resourcePath" => "/UnitCategory",
-  "summary" => "Get all UnitCategories",
+  "summary" => "Get unit categories",
   "nickname" => "unit_categories_get", 
-  "responseClass" => "inline_response_200_15", 
+  "responseClass" => "inline_response_200_24", 
   "endpoint" => "/unitCategories", 
-  "notes" => "Get all UnitCategories",
+  "notes" => "Get a list of the categories of measurement units such as 'Distance', 'Duration', 'Energy', 'Frequency', 'Miscellany', 'Pressure', 'Proportion', 'Rating', 'Temperature', 'Volume', and 'Weight'.",
   "parameters" => [
     
     {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
+    {
       "name" => "name",
-      "description" => "name",
+      "description" => "Unit category name",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -22,7 +32,7 @@ MyApp.add_route('GET', '/unitCategories', {
     
     {
       "name" => "created_at",
-      "description" => "created_at",
+      "description" => "When the record was first created. Use ISO 8601 datetime format",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -32,7 +42,7 @@ MyApp.add_route('GET', '/unitCategories', {
     
     {
       "name" => "updated_at",
-      "description" => "updated_at",
+      "description" => "When the record was last updated. Use ISO 8601 datetime format",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -42,7 +52,7 @@ MyApp.add_route('GET', '/unitCategories', {
     
     {
       "name" => "limit",
-      "description" => "limit",
+      "description" => "The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0. The maximum limit is 200 records.",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -52,7 +62,7 @@ MyApp.add_route('GET', '/unitCategories', {
     
     {
       "name" => "offset",
-      "description" => "offset",
+      "description" => "OFFSET says to skip that many rows before beginning to return rows to the client. OFFSET 0 is the same as omitting the OFFSET clause. If both OFFSET and LIMIT appear, then OFFSET rows are skipped before starting to count the LIMIT rows that are returned.",
       "dataType" => "int",
       "paramType" => "query",
       
@@ -62,7 +72,7 @@ MyApp.add_route('GET', '/unitCategories', {
     
     {
       "name" => "sort",
-      "description" => "sort",
+      "description" => "Sort by given field. If the field is prefixed with &#39;-&#39;, it will sort in descending order.",
       "dataType" => "string",
       "paramType" => "query",
       
@@ -81,14 +91,24 @@ MyApp.add_route('GET', '/unitCategories', {
 end
 
 
-MyApp.add_route('POST', '/unitCategories', {
+MyApp.add_route('POST', '/api/v2/unitCategories', {
   "resourcePath" => "/UnitCategory",
   "summary" => "Store UnitCategory",
   "nickname" => "unit_categories_post", 
-  "responseClass" => "inline_response_200_16", 
+  "responseClass" => "inline_response_200_25", 
   "endpoint" => "/unitCategories", 
   "notes" => "Store UnitCategory",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     
@@ -108,14 +128,24 @@ MyApp.add_route('POST', '/unitCategories', {
 end
 
 
-MyApp.add_route('GET', '/unitCategories/{id}', {
+MyApp.add_route('GET', '/api/v2/unitCategories/{id}', {
   "resourcePath" => "/UnitCategory",
   "summary" => "Get UnitCategory",
   "nickname" => "unit_categories_id_get", 
-  "responseClass" => "inline_response_200_16", 
+  "responseClass" => "inline_response_200_25", 
   "endpoint" => "/unitCategories/{id}", 
   "notes" => "Get UnitCategory",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {
@@ -135,7 +165,7 @@ MyApp.add_route('GET', '/unitCategories/{id}', {
 end
 
 
-MyApp.add_route('PUT', '/unitCategories/{id}', {
+MyApp.add_route('PUT', '/api/v2/unitCategories/{id}', {
   "resourcePath" => "/UnitCategory",
   "summary" => "Update UnitCategory",
   "nickname" => "unit_categories_id_put", 
@@ -143,6 +173,16 @@ MyApp.add_route('PUT', '/unitCategories/{id}', {
   "endpoint" => "/unitCategories/{id}", 
   "notes" => "Update UnitCategory",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {
@@ -169,7 +209,7 @@ MyApp.add_route('PUT', '/unitCategories/{id}', {
 end
 
 
-MyApp.add_route('DELETE', '/unitCategories/{id}', {
+MyApp.add_route('DELETE', '/api/v2/unitCategories/{id}', {
   "resourcePath" => "/UnitCategory",
   "summary" => "Delete UnitCategory",
   "nickname" => "unit_categories_id_delete", 
@@ -177,6 +217,16 @@ MyApp.add_route('DELETE', '/unitCategories/{id}', {
   "endpoint" => "/unitCategories/{id}", 
   "notes" => "Delete UnitCategory",
   "parameters" => [
+    
+    {
+      "name" => "access_token",
+      "description" => "User&#39;s OAuth2 access token",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
     
     
     {
