@@ -23,7 +23,7 @@ rackup -p 4567 config.ru
 In your [swagger ui](https://github.com/swagger-api/swagger-ui), put in the following URL:
 
 ```
-http://localhost:4567/resources.json
+http://app.quantimo.do:4567/resources.json
 ```
 
 Voila!
